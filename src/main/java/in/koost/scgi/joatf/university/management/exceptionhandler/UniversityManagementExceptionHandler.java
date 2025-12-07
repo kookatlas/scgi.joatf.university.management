@@ -1,4 +1,26 @@
 package in.koost.scgi.joatf.university.management.exceptionhandler;
 
+import in.koost.scgi.joatf.university.management.exceptionhandler.customexceptions.DepartmentNotFoundException;
+import in.koost.scgi.joatf.university.management.exceptionhandler.customexceptions.ErrorResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.time.LocalDateTime;
+
+@RestControllerAdvice
 public class UniversityManagementExceptionHandler {
+
+    @ExceptionHandler(DepartmentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> departmentNotFoundException(DepartmentNotFoundException ex){
+        ErrorResponse error = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+
+    }
 }

@@ -10,7 +10,7 @@ import in.koost.scgi.joatf.university.management.exceptionhandler.customexceptio
 import in.koost.scgi.joatf.university.management.repositories.CourseRepo;
 import in.koost.scgi.joatf.university.management.repositories.DepartmentRepo;
 import in.koost.scgi.joatf.university.management.repositories.StudentRepo;
-import in.koost.scgi.joatf.university.management.service.ManagementService;
+import in.koost.scgi.joatf.university.management.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ManagementServiceImpl implements ManagementService {
+public class StudentServiceImpl implements StudentService {
 
 
     private final DepartmentRepo depoRepo;
