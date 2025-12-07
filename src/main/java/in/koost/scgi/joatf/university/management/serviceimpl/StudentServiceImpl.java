@@ -7,10 +7,12 @@ import in.koost.scgi.joatf.university.management.entities.Department;
 import in.koost.scgi.joatf.university.management.entities.Student;
 import in.koost.scgi.joatf.university.management.exceptionhandler.customexceptions.CourseNotFoundException;
 import in.koost.scgi.joatf.university.management.exceptionhandler.customexceptions.DepartmentNotFoundException;
+import in.koost.scgi.joatf.university.management.exceptionhandler.customexceptions.StudentNotFoundException;
 import in.koost.scgi.joatf.university.management.repositories.CourseRepo;
 import in.koost.scgi.joatf.university.management.repositories.DepartmentRepo;
 import in.koost.scgi.joatf.university.management.repositories.StudentRepo;
 import in.koost.scgi.joatf.university.management.service.StudentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepo studentRepo;
 
+
     @Override
     public Integer saveStudent(StudentDTO studentDto) {
         Department department = depoRepo.findByName(studentDto.getDepartment().getName())
@@ -39,10 +42,21 @@ public class StudentServiceImpl implements StudentService {
 
         Student student = new Student();
         student.setName(studentDto.getName());
-        student.setEmail(student.getEmail());
+        student.setEmail(studentDto.getEmail());
         student.setDepartment(department);
         student.setCourses(courses);
         Student saved = studentRepo.save(student);
         return saved.getId();
+    }
+
+    @Transactional
+    @Override
+    public String updateStudentEmail(int id, String email) {
+        Student student = studentRepo.findById(id).orElseThrow(
+                () -> new StudentNotFoundException("Student not found with the give ID")
+        );
+        student.setEmail(email);
+        Student saved = studentRepo.save(student);
+        return "Student updated successfully with email " + saved.getEmail();
     }
 }

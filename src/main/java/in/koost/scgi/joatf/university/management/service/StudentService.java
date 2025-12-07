@@ -7,5 +7,6 @@ public interface StudentService {
 
 
     public Integer saveStudent(StudentDTO student);
+    public String updateStudentEmail(int id, String email);
 
 }

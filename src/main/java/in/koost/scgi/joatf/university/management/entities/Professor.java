@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Data
@@ -25,8 +26,22 @@ public class Professor {
     private String name;
 
     @OneToOne(mappedBy = "head")
-    private Department departments;
+    private Department department;
 
     @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
     private List<Course> courses = new ArrayList<>();
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Professor other)) return false;
+        return id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

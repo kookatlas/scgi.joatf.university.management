@@ -3,6 +3,7 @@ package in.koost.scgi.joatf.university.management.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -24,4 +25,18 @@ public class Department {
     @OneToOne
     @JoinColumn(name = "head_id")
     private Professor head;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Department other)) return false;
+        return id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }
